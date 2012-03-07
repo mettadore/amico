@@ -5,3 +5,5 @@ pkg/*
 .yardoc
 doc
 *.rdb
+.idea
+

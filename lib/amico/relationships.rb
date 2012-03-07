@@ -265,6 +265,22 @@ module Amico
       !Amico.redis.zscore("#{Amico.namespace}:#{Amico.pending_key}:#{scope}:#{to_id}", from_id).nil?
     end
 
+    # Retrieve complete list of followed individuals for a given ID.
+    #
+    # @param id [String] ID of the individual.
+    # @param scope [String] Scope for the call
+    #
+    # Examples
+    #
+    #   Amico.follow(1, 11)
+    #   Amico.follow(1, 12)
+    #   Amico.all_following(1)
+    #
+    # @return complete list of followed individuals for a given ID.
+    def all_following(id, scope = Amico.default_scope_key)
+      members("#{Amico.namespace}:#{Amico.following_key}:#{scope}:#{id}", {:page_size => Amico.following_count(id)})
+    end
+
     # Retrieve a page of followed individuals for a given ID.
     #
     # @param id [String] ID of the individual.
@@ -297,6 +313,22 @@ module Amico
     # @return a page of followers for a given ID.
     def followers(id, options = default_options, scope = Amico.default_scope_key)
       members("#{Amico.namespace}:#{Amico.followers_key}:#{scope}:#{id}", options)
+    end
+
+    # Retrieve a complete list of followers for a given ID.
+    #
+    # @param id [String] ID of the individual.
+    # @param scope [String] Scope for the call
+    #
+    # Examples
+    #
+    #   Amico.follow(11, 1)
+    #   Amico.follow(12, 1)
+    #   Amico.all_followers(1)
+    #
+    # @return a complete list of followers for a given ID.
+    def all_followers(id, scope = Amico.default_scope_key)
+      members("#{Amico.namespace}:#{Amico.followers_key}:#{scope}:#{id}", {:page_size => Amico.followers_count(id)})
     end
 
     # Retrieve a page of blocked individuals for a given ID.

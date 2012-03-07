@@ -229,6 +229,24 @@ describe Amico::Relationships do
     end
   end
 
+  describe "All followers" do
+    it 'should return the full list of followers' do
+      add_reciprocal_followers 35
+
+      Amico.followers_page_count(1).should be(2)
+      Amico.followers(1).count.should be(25)
+      Amico.all_followers(1).count.should be(34)
+    end
+  end
+  describe "All following" do
+    it 'should return the full list of followers' do
+      add_reciprocal_followers 35
+
+      Amico.following_page_count(1).should be(2)
+      Amico.following(1).count.should be(25)
+      Amico.all_following(1).count.should be(34)
+    end
+  end
   describe '#following_page_count' do
     it 'should return the correct count' do
       add_reciprocal_followers
